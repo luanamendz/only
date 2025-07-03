@@ -1,255 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Flor brotando da terra - efeito natural</title>
-<style>
-  body {
-    margin: 0; padding: 0;
-    height: 100vh;
-    background: linear-gradient(to top, #1b2a14 0%, #0a0a0a 80%);
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    overflow: hidden;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    position: relative;
-  }
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="purple-flowers.css" />
+    <title>purple flowers</title>
+  </head>
+  <body class="not-loaded">
+    <div class="night"></div>
+    <div class="flowers">
+      <div class="flower flower--1">
+        <div class="flower_leafs flower_leafs--1">
+          <div class="flower_leaf flower_leaf--1"></div>
+          <div class="flower_leaf flower_leaf--2"></div>
+          <div class="flower_leaf flower_leaf--3"></div>
+          <div class="flower_leaf flower_leaf--4"></div>
+          <div class="flower__white-circle"></div>
+          <div class="flower_light flower_light--1"></div>
+          <div class="flower_light flower_light--2"></div>
+          <div class="flower_light flower_light--3"></div>
+          <div class="flower_light flower_light--4"></div>
+          <div class="flower_light flower_light--5"></div>
+          <div class="flower_light flower_light--6"></div>
+          <div class="flower_light flower_light--7"></div>
+          <div class="flower_light flower_light--8"></div>
+        </div>
+        <div class="flower__line">
+          <div class="flower_lineleaf flowerline_leaf--1"></div>
+          <div class="flower_lineleaf flowerline_leaf--2"></div>
+          <div class="flower_lineleaf flowerline_leaf--3"></div>
+          <div class="flower_lineleaf flowerline_leaf--4"></div>
+          <div class="flower_lineleaf flowerline_leaf--5"></div>
+          <div class="flower_lineleaf flowerline_leaf--6"></div>
+        </div>
+      </div>
 
-  /* Terra */
-  .ground {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 80px;
-    background: linear-gradient(135deg, #3c5c1a 0%, #1f3610 100%);
-    box-shadow: inset 0 10px 20px #182f0b;
-  }
-
-  /* Flor container - vai subir de baixo */
-  .flower {
-    position: relative;
-    width: 120px;
-    height: 220px;
-    margin-bottom: 10px;
-    transform-origin: bottom center;
-    animation: growUp 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    opacity: 0;
-  }
-
-  @keyframes growUp {
-    0% {
-      transform: translateY(100px) scaleY(0.2);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0) scaleY(1);
-      opacity: 1;
-    }
-  }
-
-  /* Caule - alongando de baixo pra cima */
-  .stem {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 8px;
-    height: 140px;
-    background: linear-gradient(180deg, #2a5f2b 0%, #154515 100%);
-    border-radius: 5px;
-    transform-origin: bottom;
-    animation: stemGrow 2s ease forwards;
-  }
-
-  @keyframes stemGrow {
-    0% { height: 0; opacity: 0; }
-    100% { height: 140px; opacity: 1; }
-  }
-
-  /* Folhas - formas curvas, brotando com scaleY e opacidade */
-
-  .leaf {
-    position: absolute;
-    width: 70px;
-    height: 50px;
-    background: linear-gradient(135deg, #3fa13f 0%, #2b6a2b 100%);
-    border-radius: 40px 0 40px 40px;
-    opacity: 0;
-    transform-origin: left center;
-    transform: scaleX(0);
-    box-shadow: inset -5px 5px 8px rgba(0,0,0,0.2);
-  }
-
-  .leaf.left {
-    bottom: 70px;
-    left: calc(50% - 40px);
-    animation: leafGrow 1.5s ease forwards;
-    animation-delay: 2.1s;
-  }
-
-  .leaf.right {
-    bottom: 110px;
-    left: 50%;
-    border-radius: 0 40px 40px 40px;
-    animation: leafGrow 1.5s ease forwards;
-    animation-delay: 2.6s;
-  }
-
-  @keyframes leafGrow {
-    to {
-      opacity: 1;
-      transform: scaleX(1);
-    }
-  }
-
-  /* Cabeça da flor (pétalas) */
-
-  .flower-head {
-    position: absolute;
-    bottom: 140px;
-    left: 50%;
-    width: 90px;
-    height: 90px;
-    transform: translateX(-50%);
-  }
-
-  .petal {
-    position: absolute;
-    width: 50px;
-    height: 70px;
-    background: radial-gradient(circle at center, #ff6f91 0%, #e63950 80%);
-    border-radius: 60% 40% 50% 50% / 70% 80% 20% 30%;
-    opacity: 0;
-    transform-origin: bottom center;
-    transform: scaleY(0);
-    box-shadow: 0 5px 10px rgba(230, 57, 80, 0.5);
-  }
-
-  .petal.top {
-    top: 0;
-    left: 20px;
-    animation: petalOpen 1s forwards;
-    animation-delay: 3.3s;
-  }
-
-  .petal.left {
-    top: 20px;
-    left: 0;
-    transform-origin: bottom right;
-    border-radius: 40% 60% 50% 50% / 80% 70% 30% 20%;
-    animation: petalOpen 1s forwards;
-    animation-delay: 3.7s;
-  }
-
-  .petal.right {
-    top: 20px;
-    right: 0;
-    border-radius: 60% 40% 50% 50% / 70% 80% 20% 30%;
-    animation: petalOpen 1s forwards;
-    animation-delay: 4.1s;
-  }
-
-  @keyframes petalOpen {
-    to {
-      opacity: 1;
-      transform: scaleY(1);
-    }
-  }
-
-  /* Versos e assinatura */
-
-  .verses {
-    position: fixed;
-    bottom: 100px;
-    width: 100%;
-    max-width: 500px;
-    text-align: center;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.3em;
-    color: #eee;
-    user-select: none;
-  }
-
-  .verse {
-    opacity: 0;
-    margin: 10px 0;
-    animation: fadeIn 1.8s ease forwards;
-  }
-
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-
-  .signature {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    font-size: 0.9em;
-    color: #ff6f91cc;
-    opacity: 0;
-    transition: opacity 1.8s ease;
-    user-select: none;
-  }
-
-  .signature.visible {
-    opacity: 1;
-  }
-</style>
-</head>
-<body>
-
-  <div class="flower">
-    <div class="stem"></div>
-    <div class="leaf left"></div>
-    <div class="leaf right"></div>
-    <div class="flower-head">
-      <div class="petal top"></div>
-      <div class="petal left"></div>
-      <div class="petal right"></div>
+      <!-- Repete estrutura para outras flores (flower--2, flower--3, etc.) -->
     </div>
-  </div>
-
-  <div class="verses" id="verses"></div>
-  <div class="signature" id="signature">by Luana Mendes</div>
-  
-<script>
-  const lyrics = [
-    "And I've always lived like this",
-    "Keeping a comfortable distance",
-    "And up until now I had sworn to myself that I'm content",
-    "With loneliness",
-    "Because none of it was ever worth the risk",
-    "Well, you are the only exception",
-    "You are the only exception",
-    "You are the only exception",
-    "You are the only exception"
-  ];
-
-  const versesDiv = document.getElementById('verses');
-  const signature = document.getElementById('signature');
-
-  // Quando a animação principal terminar (4s), começar versos
-  setTimeout(() => {
-    lyrics.forEach((line, i) => {
-      setTimeout(() => {
-        const p = document.createElement('p');
-        p.classList.add('verse');
-        p.textContent = line;
-        versesDiv.appendChild(p);
-      }, i * 2500);
-    });
-    // Mostrar assinatura depois de 3 versos
-    setTimeout(() => {
-      signature.classList.add('visible');
-    }, 3 * 2500);
-  }, 4000);
-</script>
-
-</body>
-</html>
-
-  </script>
-
-</body>
+    <script src="purple-flowers.js"></script>
+  </body>
 </html>
