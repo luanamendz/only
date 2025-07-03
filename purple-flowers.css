@@ -1,3 +1,4 @@
+/* Reset e variáveis */
 *,
 *::after,
 *::before {
@@ -5,11 +6,14 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 :root {
   --color-bg: linear-gradient(to top, #2c0e22, #000005);
   --color-glass: linear-gradient(to left, #142544, #1a9092);
   --color-water: linear-gradient(to left, #142544, #1b6d6e);
 }
+
+/* Corpo da página */
 body {
   background-image: var(--color-bg);
   min-height: 100vh;
@@ -19,6 +23,8 @@ body {
   overflow: hidden;
   text-align: center;
 }
+
+/* Título e créditos */
 h1 {
   font-size: 3rem;
   color: white;
@@ -28,12 +34,15 @@ h1 {
   opacity: 1;
   animation: word-animation 2s ease-in-out forwards;
 }
+
 .my-name {
   position: absolute;
   color: rgba(255, 255, 255, 0.318);
   top: 60%;
   animation: word-animation 2s ease-in-out forwards;
 }
+
+/* Efeito da chuva */
 .rain {
   height: 0.5rem;
   width: 0.15rem;
@@ -43,6 +52,8 @@ h1 {
   border-radius: 45%;
   z-index: 2;
   animation: rain-drop 1s linear forwards;
+  pointer-events: none;
+  will-change: transform;
 }
 
 @keyframes rain-drop {
@@ -53,17 +64,20 @@ h1 {
     transform: translateY(110vh);
   }
 }
+
 @keyframes word-animation {
   to {
     opacity: 0;
   }
 }
 
+/* Flor oculta no início */
 .flower {
   position: relative;
   display: none;
 }
 
+/* Flor: copo de vidro */
 .flower__glass {
   width: 20vmin;
   height: 30vmin;
@@ -93,6 +107,7 @@ h1 {
   height: 15vmin;
 }
 
+/* Posicionamento de cada flor */
 .f-wrapper {
   position: absolute;
   left: 45%;
@@ -161,6 +176,7 @@ h1 {
   transform: translate(-350%, -50%) rotate(-120deg);
 }
 
+/* Cores e formas específicas de folhas por flor */
 .f-wrapper--2 .flower__leaf:not(:first-child) {
   width: 3.8vmin;
   height: 10vmin;
@@ -203,6 +219,7 @@ h1 {
   background-image: linear-gradient(to left bottom, #ad2be0, #712291);
 }
 
+/* Caule e folha padrão */
 .flower__line {
   width: 2vmin;
   height: 56vmin;
@@ -227,7 +244,6 @@ h1 {
   width: 5vmin;
   height: 14vmin;
   background-image: linear-gradient(to bottom, #ffa085, #fa7373, #1a233a 99%);
-
   clip-path: ellipse(50% 50% at 50% 50%);
   transform-origin: center bottom;
   animation: open-flower 2s 1s backwards;
@@ -243,45 +259,27 @@ h1 {
   animation: open-flowe--middle 1.4s 1s backwards;
 }
 
-.flower__leaf--2 {
-  transform: translateX(-50%) rotate(-30deg);
-}
-.flower__leaf--3 {
-  transform: translateX(-50%) rotate(-50deg);
-}
-.flower__leaf--4 {
-  transform: translateX(-50%) rotate(-70deg);
-}
+/* Ângulos das pétalas */
+.flower__leaf--2 { transform: translateX(-50%) rotate(-30deg); }
+.flower__leaf--3 { transform: translateX(-50%) rotate(-50deg); }
+.flower__leaf--4 { transform: translateX(-50%) rotate(-70deg); }
+.flower__leaf--5 { transform: translateX(-50%) rotate(30deg); }
+.flower__leaf--6 { transform: translateX(-50%) rotate(50deg); }
+.flower__leaf--7 { transform: translateX(-50%) rotate(70deg); }
 
-.flower__leaf--5 {
-  transform: translateX(-50%) rotate(30deg);
-}
-
-.flower__leaf--6 {
-  transform: translateX(-50%) rotate(50deg);
-}
-
-.flower__leaf--7 {
-  transform: translateX(-50%) rotate(70deg);
-}
-
+/* Pétala 8 personalizada */
 .flower__leaf--8 {
   width: 13vmin;
   height: 11vmin;
   bottom: 6vmin;
   left: -30%;
-  border-radius: none;
-  clip-path: none;
   border-radius: 10vmin 2vmin 10vmin 2vmin;
+  clip-path: none;
   transform: rotate(-55deg);
-  background-image: linear-gradient(
-    to left bottom,
-    #ffa085,
-    #eb8b8b,
-    #492f2f 98%
-  );
+  background-image: linear-gradient(to left bottom, #ffa085, #eb8b8b, #492f2f 98%);
 }
 
+/* Queda de pétalas animada */
 .flower__fall-down--yellow {
   animation: flower-fall-down-yellow 8s 1.2s linear forwards;
 }
@@ -293,13 +291,12 @@ h1 {
 .flower__fall-down--purple {
   bottom: 4vmin;
   animation: flower-fall-down-purple 6s 1.2s linear forwards,
-    flower-falling 6s 7.2s linear infinite;
+             flower-falling 6s 7.2s linear infinite;
 }
 
+/* Animações */
 @keyframes open-flower {
-  0% {
-    transform: translateX(-50%) rotate(0);
-  }
+  0% { transform: translateX(-50%) rotate(0); }
 }
 
 @keyframes open-flowe--middle {
@@ -310,80 +307,51 @@ h1 {
 }
 
 @keyframes flower-fall-down-pink {
-  0% {
-    transform: rotate(-55deg);
-  }
-
-  50% {
-    transform: rotateX(-100deg);
-  }
-
-  100% {
-    transform: translate(2vmin, 28vmin);
-  }
+  0% { transform: rotate(-55deg); }
+  50% { transform: rotateX(-100deg); }
+  100% { transform: translate(2vmin, 28vmin); }
 }
 
 @keyframes flower-fall-down-yellow {
-  0% {
-    transform: rotate(-55deg);
-  }
-
+  0% { transform: rotate(-55deg); }
   50% {
     bottom: 3vmin;
     transform: rotateX(-100deg);
   }
-
   100% {
     transform: translate(2vmin, 70vmin) rotate(150deg);
   }
 }
 
 @keyframes flower-fall-down-purple {
-  0% {
-    transform: rotate(-50deg);
-  }
-
+  0% { transform: rotate(-50deg); }
   25% {
     bottom: 1vmin;
     transform: rotateX(-100deg);
     perspective: 0px;
   }
-
   50% {
-    perspective: 0px;
     transform: translate(-30vmin, 2vmin) rotate(90deg);
   }
-
   75% {
-    perspective: 0px;
     transform: translate(-34vmin, -2vmin);
   }
-
   100% {
-    transform-origin: center;
     transform: translate(-34vmin, -2vmin) rotateY(-80deg) rotateX(35deg);
   }
 }
 
 @keyframes flower-falling {
-  0%,
-  100% {
-    transform-origin: center;
+  0%, 100% {
     transform: translate(-34vmin, -2vmin) rotateY(-80deg) rotateX(35deg);
   }
-
   25% {
-    transform-origin: center;
     transform: translate(-34.4vmin, -2vmin) rotateY(-84deg) rotateX(35deg);
   }
-
   50% {
-    transform-origin: center;
     transform: translate(-32vmin, -4.2vmin) rotateY(-80deg) rotateX(35deg);
   }
-
   75% {
-    transform-origin: center;
     transform: translate(-36vmin, 1.1vmin) rotateY(-80deg) rotateX(35deg);
   }
 }
