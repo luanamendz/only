@@ -3,32 +3,113 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Only Exception</title>
+  <title>Flor nascendo de baixo - efeito orgânico</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
-      color: white;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      margin: 0; padding: 0;
       height: 100vh;
+      background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+      display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      overflow: hidden;
       position: relative;
     }
 
     svg {
-      width: 150px;
-      height: 150px;
-      stroke: #00e0ff;
-      stroke-width: 2;
-      fill: none;
-      margin-bottom: 20px;
+      width: 200px;
+      height: 300px;
+      overflow: visible;
     }
 
+    /* Estilo dos paths */
+    path {
+      stroke: #00e0ff;
+      stroke-width: 3;
+      fill: none;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    /* Inicialmente esconder e preparar para animação de traçado */
+    .draw {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      opacity: 1;
+      animation-fill-mode: forwards;
+    }
+
+    /* Para folhas e pétalas que vão aparecer com scale e fade */
+    .hidden-part {
+      opacity: 0;
+      transform-origin: center bottom;
+      transform: scaleY(0);
+      animation-fill-mode: forwards;
+    }
+
+    /* Animação para traçado do caule */
+    @keyframes draw-stem {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    /* Animação para folhas brotando */
+    @keyframes grow-leaf {
+      to {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+    }
+
+    /* Animação para pétalas abrindo */
+    @keyframes bloom-petal {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Animação para a flor subir da base */
+    .flower-group {
+      transform-origin: bottom center;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease-out;
+      animation-name: grow-flower-up;
+      animation-duration: 3.5s;
+    }
+
+    @keyframes grow-flower-up {
+      from {
+        transform: translateY(120px) scale(0.5);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Assinatura no cantinho */
+    .signature {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 0.9em;
+      color: #00e0ffcc;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      user-select: none;
+    }
+
+    .signature.visible {
+      opacity: 1;
+    }
+
+    /* Versos estilo fadeIn */
     .verses {
       position: absolute;
       bottom: 80px;
@@ -38,13 +119,15 @@
       text-align: center;
       width: 90%;
       max-width: 400px;
+      font-size: 1.2em;
+      line-height: 1.5em;
+      user-select: none;
     }
 
     .verse {
       opacity: 0;
-      font-size: 1.2em;
-      margin: 10px 0;
-      animation: fadeIn 2s ease forwards;
+      margin: 8px 0;
+      animation: fadeIn 1.8s ease forwards;
     }
 
     @keyframes fadeIn {
@@ -52,43 +135,27 @@
         opacity: 1;
       }
     }
-
-    .signature {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      font-size: 0.9em;
-      color: #aaa;
-      opacity: 0;
-      transition: opacity 1.5s ease-in-out;
-    }
-
-    .signature.visible {
-      opacity: 1;
-    }
   </style>
 </head>
 <body>
 
-  <svg id="flower-svg" viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 120 160" class="flower-group" xmlns="http://www.w3.org/2000/svg" aria-label="Flor animada">
     <!-- Caule -->
-    <path id="stem" d="M60 150 L60 90" />
+    <path id="stem" class="draw" d="M60 150 L60 90" />
     <!-- Folhas -->
-    <path id="leaf-left" d="M60 120 Q45 105 55 90" />
-    <path id="leaf-right" d="M60 120 Q75 105 65 90" />
+    <path id="leaf-left" class="hidden-part" d="M60 120 Q45 105 55 90" />
+    <path id="leaf-right" class="hidden-part" d="M60 120 Q75 105 65 90" />
     <!-- Pétalas -->
-    <path id="petal-top" d="M60 90 Q50 70 60 50 Q70 70 60 90 Z" />
-    <path id="petal-left" d="M60 90 Q40 85 45 70 Q50 60 60 70 Z" />
-    <path id="petal-right" d="M60 90 Q80 85 75 70 Q70 60 60 70 Z" />
+    <path id="petal-top" class="hidden-part" d="M60 90 Q50 70 60 50 Q70 70 60 90 Z" />
+    <path id="petal-left" class="hidden-part" d="M60 90 Q40 85 45 70 Q50 60 60 70 Z" />
+    <path id="petal-right" class="hidden-part" d="M60 90 Q80 85 75 70 Q70 60 60 70 Z" />
   </svg>
 
   <div class="verses" id="verses"></div>
-
   <div class="signature" id="signature">by Luana Mendes</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/vivus@latest/dist/vivus.min.js"></script>
   <script>
-    const lyrics = [
+    const verses = [
       "And I've always lived like this",
       "Keeping a comfortable distance",
       "And up until now I had sworn to myself that I'm content",
@@ -100,28 +167,76 @@
       "You are the only exception"
     ];
 
-    const versesDiv = document.getElementById("verses");
-    const signature = document.getElementById("signature");
+    // Função helper pra animar elementos com CSS + delay
+    function animateCSS(element, animationName, delayMs, durationMs = 1000) {
+      element.style.animation = `${animationName} ${durationMs}ms ease forwards`;
+      element.style.animationDelay = delayMs + 'ms';
+    }
 
-    // Animação da flor com Vivus
-    new Vivus('flower-svg', {
-      type: 'delayed',
-      duration: 200,
-      animTimingFunction: Vivus.EASE
-    }, () => {
-      // Quando acabar a animação da flor, mostrar assinatura
-      signature.classList.add('visible');
+    // Animação principal:
+    // 1) Desenha o caule (stroke-dashoffset)
+    // 2) Depois, folhas aparecem com scaleY e opacity
+    // 3) Por fim, pétalas crescem com scale e opacity
+    // 4) Depois mostramos os versos e a assinatura
 
-      // Começar a exibir versos sequencialmente
-      lyrics.forEach((line, index) => {
+    const stem = document.getElementById('stem');
+    const leaves = [
+      document.getElementById('leaf-left'),
+      document.getElementById('leaf-right')
+    ];
+    const petals = [
+      document.getElementById('petal-top'),
+      document.getElementById('petal-left'),
+      document.getElementById('petal-right')
+    ];
+
+    // Começa a animação de crescer a flor subindo e desenhando o caule
+    const flowerGroup = document.querySelector('.flower-group');
+    flowerGroup.style.animationDuration = '3.5s';
+
+    // 1 - Desenha caule
+    stem.style.animation = 'draw-stem 2s ease forwards';
+
+    // Depois de 2s, anima as folhas
+    setTimeout(() => {
+      leaves.forEach((leaf, i) => {
+        animateCSS(leaf, 'grow-leaf', i * 400, 1200);
+      });
+    }, 2100);
+
+    // Depois das folhas, anima as pétalas
+    setTimeout(() => {
+      petals.forEach((petal, i) => {
+        // pétalas crescem com escala normal (scale(0) -> scale(1))
+        petal.style.transformOrigin = 'center center';
+        petal.style.transform = 'scale(0)';
+        animateCSS(petal, 'bloom-petal', i * 300, 1000);
+      });
+    }, 3700);
+
+    // Depois das pétalas, anima o grupo inteiro subindo e aparecendo (efeito de nascer de baixo)
+    setTimeout(() => {
+      flowerGroup.style.animationName = 'grow-flower-up';
+      flowerGroup.style.animationDuration = '3.5s';
+      flowerGroup.style.animationFillMode = 'forwards';
+      flowerGroup.style.animationTimingFunction = 'ease-out';
+    }, 0);
+
+    // Mostra os versos depois da flor ter brotado toda (total aprox 7,5s)
+    setTimeout(() => {
+      const versesDiv = document.getElementById('verses');
+      verses.forEach((line, i) => {
         setTimeout(() => {
-          const p = document.createElement("p");
-          p.className = "verse";
+          const p = document.createElement('p');
+          p.classList.add('verse');
           p.textContent = line;
           versesDiv.appendChild(p);
-        }, index * 2500);
+        }, i * 2500);
       });
-    });
+      // Aparece a assinatura
+      document.getElementById('signature').classList.add('visible');
+    }, 8000);
+
   </script>
 
 </body>
