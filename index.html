@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The Only Exception</title>
   <style>
     body {
@@ -17,17 +17,27 @@
       justify-content: center;
       height: 100vh;
       flex-direction: column;
+      position: relative;
     }
 
-    .flower-container {
-      animation: grow 4s ease-out forwards;
-      transform: scale(0);
+    svg {
+      width: 150px;
+      height: 150px;
+      stroke: #00e0ff;
+      stroke-width: 2;
+      fill: none;
+      margin-bottom: 20px;
     }
 
-    @keyframes grow {
-      to {
-        transform: scale(1);
-      }
+    .verses {
+      position: absolute;
+      bottom: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
     }
 
     .verse {
@@ -43,39 +53,40 @@
       }
     }
 
-    .verses {
-      position: absolute;
-      bottom: 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
     .signature {
       position: absolute;
       bottom: 20px;
       right: 20px;
       font-size: 0.9em;
       color: #aaa;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .signature.visible {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <div class="flower-container">
-    <svg width="150" height="150" viewBox="0 0 100 100">
-      <circle cx="50" cy="50" r="10" fill="#00e0ff" />
-      <line x1="50" y1="60" x2="50" y2="90" stroke="#00e0ff" stroke-width="2" />
-      <circle cx="45" cy="40" r="5" fill="#00e0ff" />
-      <circle cx="55" cy="40" r="5" fill="#00e0ff" />
-      <circle cx="50" cy="35" r="5" fill="#00e0ff" />
-    </svg>
-  </div>
+
+  <svg id="flower-svg" viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+    <!-- Caule -->
+    <path id="stem" d="M60 150 L60 90" />
+    <!-- Folhas -->
+    <path id="leaf-left" d="M60 120 Q45 105 55 90" />
+    <path id="leaf-right" d="M60 120 Q75 105 65 90" />
+    <!-- Pétalas -->
+    <path id="petal-top" d="M60 90 Q50 70 60 50 Q70 70 60 90 Z" />
+    <path id="petal-left" d="M60 90 Q40 85 45 70 Q50 60 60 70 Z" />
+    <path id="petal-right" d="M60 90 Q80 85 75 70 Q70 60 60 70 Z" />
+  </svg>
 
   <div class="verses" id="verses"></div>
 
-  <div class="signature">by Luana Mendes</div>
+  <div class="signature" id="signature">by Luana Mendes</div>
 
+  <script src="https://cdn.jsdelivr.net/npm/vivus@latest/dist/vivus.min.js"></script>
   <script>
     const lyrics = [
       "And I've always lived like this",
@@ -90,16 +101,28 @@
     ];
 
     const versesDiv = document.getElementById("verses");
+    const signature = document.getElementById("signature");
 
-    lyrics.forEach((line, index) => {
-      setTimeout(() => {
-        const p = document.createElement("p");
-        p.className = "verse";
-        p.style.animationDelay = "0s";
-        p.textContent = line;
-        versesDiv.appendChild(p);
-      }, 4500 + index * 2500);
+    // Animação da flor com Vivus
+    new Vivus('flower-svg', {
+      type: 'delayed',
+      duration: 200,
+      animTimingFunction: Vivus.EASE
+    }, () => {
+      // Quando acabar a animação da flor, mostrar assinatura
+      signature.classList.add('visible');
+
+      // Começar a exibir versos sequencialmente
+      lyrics.forEach((line, index) => {
+        setTimeout(() => {
+          const p = document.createElement("p");
+          p.className = "verse";
+          p.textContent = line;
+          versesDiv.appendChild(p);
+        }, index * 2500);
+      });
     });
   </script>
+
 </body>
 </html>
